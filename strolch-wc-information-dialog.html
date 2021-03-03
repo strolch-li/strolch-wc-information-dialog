@@ -1,0 +1,180 @@
+<!-- Imports -->
+<link rel="import" href="../polymer/polymer.html">
+
+<link rel="import" href="../iron-a11y-keys/iron-a11y-keys.html">
+<link rel="import" href="../paper-button/paper-button.html">
+<link rel="import" href="../paper-dialog/paper-dialog.html">
+
+<link rel="import" href="../strolch-wc-localize-behavior/strolch-wc-localize-behavior.html">
+
+<dom-module id="strolch-wc-information-dialog">
+    <template>
+
+        <!-- Style -->
+        <style is="custom-style">
+            :host {
+
+            }
+        </style>
+
+        <paper-dialog id="dlg" modal>
+            <iron-a11y-keys keys="esc" on-keys-pressed="close"></iron-a11y-keys>
+            <h2>[[title]]</h2>
+
+            <p>[[line1]]</p>
+
+            <template is="dom-if" if="[[isNotEmptyString(line2)]]">
+                <p>[[line2]]</p>
+            </template>
+
+            <template is="dom-if" if="[[isNotEmptyString(line3)]]">
+                <p>[[line3]]</p>
+            </template>
+
+            <div class="buttons">
+                <template is="dom-if" if="[[confirmation]]">
+                    <template is="dom-if" if="[[cancelable]]">
+                        <paper-button dialog-dismiss>[[cancelLbl]]</paper-button>
+                    </template>
+                    <paper-button dialog-confirm autofocus on-tap="_onOk">[[okLbl]]</paper-button>
+                </template>
+                <template is="dom-if" if="[[!confirmation]]">
+                    <paper-button dialog-confirm autofocus>[[closeLbl]]</paper-button>
+                </template>
+            </div>
+        </paper-dialog>
+
+    </template>
+
+    <script>
+        Polymer({
+
+            is: "strolch-wc-information-dialog",
+            behaviors: [
+                StrolchLocalizeBehavior
+            ],
+
+            properties: {
+                localesPath: {
+                    type: String,
+                    value: './locales.json'
+                },
+                title: {
+                    type: String
+                },
+                line1: {
+                    type: String
+                },
+                line2: {
+                    type: String
+                },
+                line3: {
+                    type: String
+                },
+                cancelLbl: {
+                    type: String
+                },
+                okLbl: {
+                    type: String
+                },
+                closeLbl: {
+                    type: String
+                },
+                confirmation: {
+                    type: Boolean
+                },
+                cancelable: {
+                    type: Boolean,
+                    value: true
+                },
+                callback: {
+                    type: Function,
+                    value: null
+                }
+            },
+
+            isNotEmptyString: function (val) {
+                return typeof val !== 'undefined' && val != null && val !== '';
+            },
+
+            observers: [],
+
+            _onOk: function () {
+                if (this.callback == null) {
+                    console.log("Bad dlg config: no callback!");
+                    alert("Bad dlg config: no callback!");
+                } else if (typeof this.callback !== "function") {
+                    console.log("Bad dlg config: callback is not a function, but is " + (typeof this.callback));
+                    alert("Bad dlg config: callback is not a function, but is " + (typeof this.callback));
+                } else {
+                    try {
+                        this.callback(true);
+                        this.close();
+                    } catch (e) {
+                        console.log(e);
+                        alert(e);
+                    }
+                }
+            },
+
+            open: function (data) {
+                if (data.i18n) {
+                    var args = [data.i18n.key];
+                    if (data.i18n.values != null) {
+                        Object.keys(data.i18n.values).forEach(function (key) {
+                            args.push(key);
+                            args.push(data.i18n.values[key]);
+                        });
+                    }
+
+                    this.title = this.localize(data.title);
+                    this.line1 = this.localize.apply(this, args);
+                    this.line2 = data.line2;
+                    this.line3 = data.line3;
+                } else if (data.translate) {
+                    this.title = this.localize(data.title);
+                    this.line1 = this.localize(data.line1);
+                    this.line2 = this.localize(data.line2);
+                    this.line3 = this.localize(data.line3);
+                } else {
+                    this.title = data.title;
+                    this.line1 = data.line1;
+                    this.line2 = data.line2;
+                    this.line3 = data.line3;
+                }
+
+                if (data.translate) {
+                    this.cancelLbl = data.cancelLbl ? this.localize(data.cancelLbl) : this.localize("cancel");
+                    this.okLbl = data.okLbl ? this.localize(data.okLbl) : this.localize("ok");
+                    this.closeLbl = data.closeLbl ? this.localize(data.closeLbl) : this.localize("close");
+                } else {
+                    this.cancelLbl = data.cancelLbl ? data.cancelLbl : this.localize("cancel");
+                    this.okLbl = data.okLbl ? data.okLbl : this.localize("ok");
+                    this.closeLbl = data.closeLbl ? data.closeLbl : this.localize("close");
+                }
+
+                if (data.callback == null) {
+                    this.confirmation = false;
+                } else {
+                    if (typeof data.callback !== "function") {
+                        alert("Bad dlg config: is confirmation, but callback is not a function, but is " + (typeof data.callback));
+                        return;
+                    }
+
+                    this.callback = data.callback;
+                    this.confirmation = true;
+                }
+
+                this.cancelable = typeof data.cancelable === "boolean" ? data.cancelable : true;
+
+                console.log("Message: " + this.title + ': ' + this.line1);
+                this.$.dlg.notifyResize();
+                this.$.dlg.open();
+            },
+
+            close: function (e) {
+                this.$.dlg.close();
+            }
+        });
+    </script>
+</dom-module>

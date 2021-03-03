@@ -1,0 +1,17 @@
+{
+  "en": {
+    "close": "Close",
+    "cancel": "Cancel",
+    "ok": "Ok"
+  },
+  "de": {
+    "cancel": "Abbrechen",
+    "close": "Schliessen",
+    "ok": "Ok"
+  },
+  "fr": {
+    "cancel": "Arrêt",
+    "close": "Fermer",
+    "ok": "Ok"
+  }
+}
