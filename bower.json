@@ -1,7 +1,7 @@
 {
   "name": "strolch-wc-information-dialog",
   "description": "Strolch WebComponent Information Dialog",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "authors": [
     "Robert von Burg"
   ],
@@ -19,6 +19,9 @@
   "homepage": "https://github.com/4treesCH/strolch-wc-information-dialog",
   "ignore": [],
   "dependencies": {
+    "strolchjs": "4treesCH/strolchjs#^0.4.2",
+    "strolch-wc-localize-behavior": "4treesCH/strolch-wc-localize-behavior#^1.1.9",
+
     "polymer": "Polymer/polymer#^1.11.3",
 
     "iron-a11y-keys": "PolymerElements/iron-a11y-keys#^1.0.9",
