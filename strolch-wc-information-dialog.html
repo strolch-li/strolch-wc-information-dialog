@@ -34,12 +34,12 @@
             <div class="buttons">
                 <template is="dom-if" if="[[confirmation]]">
                     <template is="dom-if" if="[[cancelable]]">
-                        <paper-button dialog-dismiss>[[cancelLbl]]</paper-button>
+                        <paper-button on-tap="_onClose">[[cancelLbl]]</paper-button>
                     </template>
-                    <paper-button dialog-confirm autofocus on-tap="_onOk">[[okLbl]]</paper-button>
+                    <paper-button autofocus on-tap="_onOk">[[okLbl]]</paper-button>
                 </template>
                 <template is="dom-if" if="[[!confirmation]]">
-                    <paper-button dialog-confirm autofocus>[[closeLbl]]</paper-button>
+                    <paper-button autofocus on-tap="_onClose">[[closeLbl]]</paper-button>
                 </template>
             </div>
         </paper-dialog>
@@ -99,7 +99,23 @@
 
             observers: [],
 
+            _onClose: function () {
+                if (this.confirmation) {
+                    this._confirm(false);
+                } else {
+                    this.close();
+                }
+            },
+
             _onOk: function () {
+                if (this.confirmation) {
+                    this._confirm(true);
+                } else {
+                    this.close();
+                }
+            },
+
+            _confirm: function (confirmed) {
                 if (this.callback == null) {
                     console.log("Bad dlg config: no callback!");
                     alert("Bad dlg config: no callback!");
@@ -108,7 +124,7 @@
                     alert("Bad dlg config: callback is not a function, but is " + (typeof this.callback));
                 } else {
                     try {
-                        this.callback(true);
+                        this.callback(confirmed);
                         this.close();
                     } catch (e) {
                         console.log(e);
