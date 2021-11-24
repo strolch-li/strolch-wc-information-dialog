@@ -36,9 +36,12 @@
                     <template is="dom-if" if="[[cancelable]]">
                         <paper-button on-tap="_onCancel">[[cancelLbl]]</paper-button>
                     </template>
-                    <paper-button autofocus on-tap="_onOk">[[okLbl]]</paper-button>
                     <template is="dom-if" if="[[closeable]]">
+                        <paper-button on-tap="_onOk">[[okLbl]]</paper-button>
                         <paper-button autofocus on-tap="_onClose">[[closeLbl]]</paper-button>
+                    </template>
+                    <template is="dom-if" if="[[!closeable]]">
+                        <paper-button autofocus on-tap="_onOk">[[okLbl]]</paper-button>
                     </template>
                 </template>
                 <template is="dom-if" if="[[!confirmation]]">
