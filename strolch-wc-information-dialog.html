@@ -203,8 +203,10 @@
                     this.confirmation = true;
                 }
 
-                this.cancelable = typeof data.cancelable === "boolean" && data.cancelable;
-                this.closeable = typeof data.closeable === "boolean" && data.closeable;
+                if (typeof data.cancelable === "boolean")
+                    this.cancelable = data.cancelable;
+                if (typeof data.closeable === "boolean")
+                    this.closeable = data.closeable;
 
                 console.log("Message: " + this.title + ': ' + this.line1);
                 this.$.dlg.notifyResize();
