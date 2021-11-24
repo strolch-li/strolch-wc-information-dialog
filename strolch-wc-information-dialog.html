@@ -34,9 +34,12 @@
             <div class="buttons">
                 <template is="dom-if" if="[[confirmation]]">
                     <template is="dom-if" if="[[cancelable]]">
-                        <paper-button on-tap="_onClose">[[cancelLbl]]</paper-button>
+                        <paper-button on-tap="_onCancel">[[cancelLbl]]</paper-button>
                     </template>
                     <paper-button autofocus on-tap="_onOk">[[okLbl]]</paper-button>
+                    <template is="dom-if" if="[[closeable]]">
+                        <paper-button autofocus on-tap="_onClose">[[closeLbl]]</paper-button>
+                    </template>
                 </template>
                 <template is="dom-if" if="[[!confirmation]]">
                     <paper-button autofocus on-tap="_onClose">[[closeLbl]]</paper-button>
@@ -87,6 +90,10 @@
                     type: Boolean,
                     value: true
                 },
+                closeable: {
+                    type: Boolean,
+                    value: false
+                },
                 callback: {
                     type: Function,
                     value: null
@@ -100,6 +107,10 @@
             observers: [],
 
             _onClose: function () {
+                this.close();
+            },
+
+            _onCancel: function () {
                 if (this.confirmation) {
                     this._confirm(false);
                 } else {
@@ -181,7 +192,8 @@
                     this.confirmation = true;
                 }
 
-                this.cancelable = typeof data.cancelable === "boolean" ? data.cancelable : true;
+                this.cancelable = typeof data.cancelable === "boolean" && data.cancelable;
+                this.closeable = typeof data.closeable === "boolean" && data.closeable;
 
                 console.log("Message: " + this.title + ': ' + this.line1);
                 this.$.dlg.notifyResize();
