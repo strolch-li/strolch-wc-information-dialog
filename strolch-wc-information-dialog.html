@@ -66,28 +66,36 @@
                     value: './locales.json'
                 },
                 title: {
-                    type: String
+                    type: String,
+                    value: null
                 },
                 line1: {
-                    type: String
+                    type: String,
+                    value: null
                 },
                 line2: {
-                    type: String
+                    type: String,
+                    value: null
                 },
                 line3: {
-                    type: String
+                    type: String,
+                    value: null
                 },
                 cancelLbl: {
-                    type: String
+                    type: String,
+                    value: null
                 },
                 okLbl: {
-                    type: String
+                    type: String,
+                    value: null
                 },
                 closeLbl: {
-                    type: String
+                    type: String,
+                    value: null
                 },
                 confirmation: {
-                    type: Boolean
+                    type: Boolean,
+                    value: false
                 },
                 cancelable: {
                     type: Boolean,
@@ -104,7 +112,7 @@
             },
 
             isNotEmptyString: function (val) {
-                return Strolch.isNotEmptyString();
+                return val != null && typeof val === "string" && val.length > 0;
             },
 
             observers: [],
