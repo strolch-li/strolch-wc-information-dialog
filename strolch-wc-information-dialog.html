@@ -6,24 +6,22 @@
 <link rel="import" href="../paper-dialog/paper-dialog.html">
 
 <link rel="import" href="../strolch-wc-localize-behavior/strolch-wc-localize-behavior.html">
+<link rel="import" href="../strolch-wc-styles/strolch-wc-app-style.html">
 
 <dom-module id="strolch-wc-information-dialog">
     <template>
 
         <!-- Style -->
         <style is="custom-style">
-            :host {
-                --button-text-color: var(--app-primary-color);
+            .title {
+                color: var(--paper-dialog-button-color);
             }
 
-            paper-button {
-                color: var(--button-text-color);
-            }
         </style>
 
         <paper-dialog id="dlg" modal>
             <iron-a11y-keys keys="esc" on-keys-pressed="close"></iron-a11y-keys>
-            <h2>[[title]]</h2>
+            <h2 class="title">[[title]]</h2>
 
             <p>[[line1]]</p>
 
@@ -59,7 +57,7 @@
     <script>
         Polymer({
 
-            is: "strolch-wc-information-dialog",
+            is: 'strolch-wc-information-dialog',
             behaviors: [
                 StrolchLocalizeBehavior
             ],
