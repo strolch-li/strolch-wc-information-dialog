@@ -1,7 +1,7 @@
 {
   "name": "strolch-wc-information-dialog",
   "description": "Strolch WebComponent Information Dialog",
-  "version": "0.1.17",
+  "version": "0.1.18",
   "authors": [
     "Robert von Burg"
   ],
@@ -20,8 +20,8 @@
   "ignore": [],
   "dependencies": {
     "strolchjs": "strolch-li/strolchjs#^0.5.3",
-    "strolch-wc-styles": "strolch-li/strolch-wc-styles#^0.4.7",
-    "strolch-wc-localize-behavior": "strolch-li/strolch-wc-localize-behavior#^1.1.17",
+    "strolch-wc-styles": "strolch-li/strolch-wc-styles#^0.4.9",
+    "strolch-wc-localize-behavior": "strolch-li/strolch-wc-localize-behavior#^1.1.18",
     "strolch-wc-raw-text": "strolch-li/strolch-wc-raw-text#^0.1.0",
 
     "polymer": "Polymer/polymer#^1.12.0",
