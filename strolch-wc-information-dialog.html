@@ -1,7 +1,6 @@
 <!-- Imports -->
 <link rel="import" href="../polymer/polymer.html">
 
-<link rel="import" href="../iron-a11y-keys/iron-a11y-keys.html">
 <link rel="import" href="../paper-button/paper-button.html">
 <link rel="import" href="../paper-dialog/paper-dialog.html">
 
@@ -24,8 +23,7 @@
 
         </style>
 
-        <paper-dialog id="dlg" modal>
-            <iron-a11y-keys keys="esc" on-keys-pressed="close"></iron-a11y-keys>
+        <paper-dialog id="dlg" with-backdrop no-cancel-on-outside-click>
             <h2 class="title">[[title]]</h2>
 
             <template is="dom-if" if="[[isNotEmptyString(line1)]]">
